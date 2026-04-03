@@ -1,16 +1,13 @@
 import React from 'react';
-import { Image, View, Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet } from 'react-native';
 import { SvgUri } from 'react-native-svg';
 
-const StatsItemDay = ({ statsAll, statsDay, terms }) => {
+const StatsItemDay = ({ statsAll, statsDay, term }) => {
   return (
     <View style={styles.statsBlock}>
-      <Image
-        // source={terms.icon}
-        source={require('../../../icon/unit.png')}
-        defaultSource={require('../../../icon/unit.png')}
-        style={styles.statsImage}
-      />
+      <View style={styles.iconWrapper}>
+        <SvgUri width={40} height={35} uri={term?.icon} />
+      </View>
 
       <View style={styles.stats}>
         <View style={styles.statsNumber}>
@@ -18,7 +15,7 @@ const StatsItemDay = ({ statsAll, statsDay, terms }) => {
           <Text style={styles.statsDay}>(+{statsDay})</Text>
         </View>
 
-        <Text style={styles.statsText}>{terms.title}</Text>
+        <Text style={styles.statsText}>{term?.title}</Text>
       </View>
     </View>
   );
@@ -28,41 +25,50 @@ const styles = StyleSheet.create({
   stats: {
     flex: 1,
   },
+
   statsBlock: {
-    display: 'flex',
+    flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'space-between',
-    margin: 5,
-    padding: 10,
-    borderWidth: 1,
-    width: 200,
-    height: 120,
-    flex: 1,
+    padding: 12,
+    marginVertical: 6,
+    marginHorizontal: 10,
+    borderRadius: 12, //
+    backgroundColor: '#ffffffaa',
+    borderWidth: 0,
+    shadowColor: '#000',
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
+    elevation: 3,
   },
 
-  statsImage: {
-    width: 40,
-    height: 35,
-  },
   statsAll: {
-    fontSize: 15,
-    color: '#000000',
-    fontWeight: '900',
+    fontSize: 18,
+    fontWeight: '700',
+    color: '#000',
   },
+
   statsDay: {
-    fontSize: 12,
-    color: '#000000',
-    marginLeft: 10,
-    fontWeight: '600',
+    fontSize: 14,
+    color: '#444',
+    marginLeft: 6,
   },
   statsText: {
-    fontSize: 12,
-    color: '#000000',
+    fontSize: 14,
+    color: '#555',
   },
   statsNumber: {
     display: 'flex',
     flexDirection: 'row',
     alignItems: 'center',
+  },
+  iconWrapper: {
+    width: 50,
+    height: 50,
+    borderRadius: 25,
+    backgroundColor: '#f2f2f2',
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginRight: 10,
   },
 });
 

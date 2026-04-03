@@ -1,5 +1,7 @@
 import React from 'react';
 import { View, StyleSheet, Text } from 'react-native';
+import { useEffect, useState } from 'react';
+import { warInfo } from '../../../api/index';
 
 const Header = () => {
   const now = new Date();
@@ -20,6 +22,17 @@ const Header = () => {
     'December',
   ];
 
+  const [info, setInfo] = useState([]);
+
+  const getInfo = async () => {
+    const info = await warInfo();
+    setInfo(info);
+  };
+
+  useEffect(() => {
+    getInfo();
+  }, []);
+
   const monthName = monthNames[month - 1];
   return (
     <View style={styles.header}>
@@ -34,7 +47,7 @@ const Header = () => {
           {'  '}
           {monthName}
         </Text>
-        <Text style={styles.day}> хх день війни </Text>
+        <Text style={styles.day}> {info?.data?.current_day} день війни </Text>
       </View>
     </View>
   );
@@ -62,6 +75,11 @@ const styles = StyleSheet.create({
   },
 
   day: {
+    fontSize: 19,
+    color: '#FFD600',
+    fontWeight: '600',
+  },
+  data: {
     fontSize: 19,
     color: '#FFD600',
     fontWeight: '600',

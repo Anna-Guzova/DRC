@@ -1,25 +1,15 @@
-import React, { useState } from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import React from 'react';
+import { View, StyleSheet } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { Calendar, LocaleConfig } from 'react-native-calendars';
-import { useDispatch } from 'react-redux';
-import { changeDate } from '../../../redux/dateSlice';
-function CalendarItem() {
-  const [selected, setSelected] = useState('');
-  const dispatch = useDispatch();
+import { Calendar } from 'react-native-calendars';
 
-  const setDate = day => {
-    setSelected(day.dateString);
-    dispatch(changeDate(day.dateString));
-  };
-
+function CalendarItem({ selected, setSelected }) {
   return (
     <SafeAreaView style={styles.calendarBlock} edges={['top']}>
-      <Text style={styles.calendarDay}>CalendarItem</Text>
       <View style={styles.calendar}>
         <Calendar
           onDayPress={day => {
-            setDate(day);
+            setSelected(day.dateString);
           }}
           markedDates={{
             [selected]: {

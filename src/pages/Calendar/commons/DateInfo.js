@@ -1,211 +1,103 @@
-import React from 'react';
-import { Text, View, StyleSheet } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { View } from 'react-native';
 import StatsItemDay from './StatsItemDay';
-import { useSelector } from 'react-redux';
 
-const stats = {
-  message: 'The data were fetched successfully.',
-  data: {
-    date: '2022-04-14',
-    day: 50,
-    resource:
-      'https://www.facebook.com/MinistryofDefence.UA/posts/295952562717203',
-    war_status: {
-      code: 1,
-      alias: 'in_progress',
-    },
-    stats: {
-      personnel_units: 19900,
-      tanks: 753,
-      armoured_fighting_vehicles: 1968,
-      artillery_systems: 366,
-      mlrs: 122,
-      aa_warfare_systems: 64,
-      planes: 160,
-      helicopters: 144,
-      vehicles_fuel_tanks: 1437,
-      warships_cutters: 7,
-      cruise_missiles: 0,
-      uav_systems: 134,
-      special_military_equip: 25,
-      atgm_srbm_systems: 4,
-      submarines: 0,
-    },
-    increase: {
-      personnel_units: 100,
-      tanks: 14,
-      armoured_fighting_vehicles: 4,
-      artillery_systems: 8,
-      mlrs: 7,
-      aa_warfare_systems: 0,
-      planes: 2,
-      helicopters: 1,
-      vehicles_fuel_tanks: 8,
-      warships_cutters: 0,
-      cruise_missiles: 0,
-      uav_systems: 2,
-      special_military_equip: 0,
-      atgm_srbm_systems: 0,
-      submarines: 0,
-    },
-  },
-};
+import { statisticsDate, getTerms } from '../../../api/index';
 
-const terms = {
-  message: 'The data were fetched successfully.',
-  data: {
-    personnel_units: {
-      title: 'Personnel units',
-      icon: 'https://russianwarship.rip/images/icons/icon-people.svg',
-    },
-    tanks: {
-      title: 'Tanks',
-      icon: 'https://russianwarship.rip/images/icons/icon-tank.svg',
-    },
-    armoured_fighting_vehicles: {
-      title: 'Armoured fighting vehicles',
-      icon: 'https://russianwarship.rip/images/icons/icon-bbm.svg',
-    },
-    artillery_systems: {
-      title: 'Artillery systems',
-      icon: 'https://russianwarship.rip/images/icons/icon-art.svg',
-    },
-    mlrs: {
-      title: 'Multiple Launch Rocket System',
-      icon: 'https://russianwarship.rip/images/icons/icon-rszv.svg',
-    },
-    aa_warfare_systems: {
-      title: 'Anti-aircraft warfare systems',
-      icon: 'https://russianwarship.rip/images/icons/icon-ppo.svg',
-    },
-    planes: {
-      title: 'Planes',
-      icon: 'https://russianwarship.rip/images/icons/icon-plane.svg',
-    },
-    helicopters: {
-      title: 'Helicopters',
-      icon: 'https://russianwarship.rip/images/icons/icon-helicopter.svg',
-    },
-    vehicles_fuel_tanks: {
-      title: 'Vehicles and fuel tanks',
-      icon: 'https://russianwarship.rip/images/icons/icon-auto.svg',
-    },
-    warships_cutters: {
-      title: 'Warships and cutters',
-      icon: 'https://russianwarship.rip/images/icons/icon-ship.svg',
-    },
-    cruise_missiles: {
-      title: 'Cruise missiles',
-      icon: 'https://russianwarship.rip/images/icons/icon-rocket.svg',
-    },
-    uav_systems: {
-      title: 'Unmanned aerial vehicle systems',
-      icon: 'https://russianwarship.rip/images/icons/icon-bpla.svg',
-    },
-    special_military_equip: {
-      title: 'Special military equipment',
-      icon: 'https://russianwarship.rip/images/icons/icon-special.svg',
-    },
-    atgm_srbm_systems: {
-      title:
-        'Anti-tank guided missile and short-range ballistic missile systems',
-      icon: 'https://russianwarship.rip/images/icons/icon-trk.svg',
-    },
-    submarines: {
-      title: 'Submarines',
-      icon: 'https://russianwarship.rip/images/icons/icon-submarine.svg',
-    },
-  },
-};
+const DateInfo = ({ day }) => {
+  const [statistics, setStatistics] = useState(null);
+  const [terms, setTerms] = useState(null);
 
-const DateInfo = () => {
-  const test = useSelector(state => state.stats.day);
+  useEffect(() => {
+    getInfo();
+  }, [day]);
+
+  const getInfo = async () => {
+    const info = await statisticsDate(day);
+    setStatistics(info);
+    const dataTerms = await getTerms();
+    setTerms(dataTerms);
+  };
 
   return (
-    <View style={styles.DateInfoBlock}>
-      <Text>{test}</Text>
-
+    <View>
       <StatsItemDay
-        statsAll={stats.data.stats.personnel_units}
-        statsDay={stats.data.increase.personnel_units}
-        terms={terms.data.personnel_units}
+        statsAll={statistics?.data?.stats?.personnel_units}
+        statsDay={statistics?.data?.increase?.personnel_units}
+        term={terms?.data?.personnel_units}
       />
       <StatsItemDay
-        statsAll={stats.data.stats.tanks}
-        statsDay={stats.data.increase.tanks}
-        terms={terms.data.tanks}
+        statsAll={statistics?.data?.stats?.tanks}
+        statsDay={statistics?.data?.increase?.tanks}
+        term={terms?.data?.tanks}
       />
       <StatsItemDay
-        statsAll={stats.data.stats.armoured_fighting_vehicles}
-        statsDay={stats.data.increase.armoured_fighting_vehicles}
-        terms={terms.data.armoured_fighting_vehicles}
+        statsAll={statistics?.data?.stats?.armoured_fighting_vehicles}
+        statsDay={statistics?.data?.increase?.armoured_fighting_vehicles}
+        term={terms?.data?.armoured_fighting_vehicles}
       />
       <StatsItemDay
-        statsAll={stats.data.stats.artillery_systems}
-        statsDay={stats.data.increase.artillery_systems}
-        terms={terms.data.artillery_systems}
+        statsAll={statistics?.data?.stats?.artillery_systems}
+        statsDay={statistics?.data?.increase?.artillery_systems}
+        term={terms?.data?.artillery_systems}
       />
       <StatsItemDay
-        statsAll={stats.data.stats.mlrs}
-        statsDay={stats.data.increase.mlrs}
-        terms={terms.data.mlrs}
+        statsAll={statistics?.data?.stats?.mlrs}
+        statsDay={statistics?.data?.increase?.mlrs}
+        term={terms?.data?.mlrs}
       />
       <StatsItemDay
-        statsAll={stats.data.stats.aa_warfare_systems}
-        statsDay={stats.data.increase.aa_warfare_systems}
-        terms={terms.data.aa_warfare_systems}
+        statsAll={statistics?.data?.stats?.aa_warfare_systems}
+        statsDay={statistics?.data?.increase?.aa_warfare_systems}
+        term={terms?.data?.aa_warfare_systems}
       />
       <StatsItemDay
-        statsAll={stats.data.stats.planes}
-        statsDay={stats.data.increase.planes}
-        terms={terms.data.planes}
+        statsAll={statistics?.data?.stats?.planes}
+        statsDay={statistics?.data?.increase?.planes}
+        term={terms?.data?.planes}
       />
       <StatsItemDay
-        statsAll={stats.data.stats.helicopters}
-        statsDay={stats.data.increase.helicopters}
-        terms={terms.data.helicopters}
+        statsAll={statistics?.data?.stats?.helicopters}
+        statsDay={statistics?.data?.increase?.helicopters}
+        term={terms?.data?.helicopters}
       />
       <StatsItemDay
-        statsAll={stats.data.stats.vehicles_fuel_tanks}
-        statsDay={stats.data.increase.vehicles_fuel_tanks}
-        terms={terms.data.vehicles_fuel_tanks}
+        statsAll={statistics?.data?.stats?.vehicles_fuel_tanks}
+        statsDay={statistics?.data?.increase?.vehicles_fuel_tanks}
+        term={terms?.data?.vehicles_fuel_tanks}
       />
       <StatsItemDay
-        statsAll={stats.data.stats.warships_cutters}
-        statsDay={stats.data.increase.warships_cutters}
-        terms={terms.data.warships_cutters}
+        statsAll={statistics?.data?.stats?.warships_cutters}
+        statsDay={statistics?.data?.increase?.warships_cutters}
+        term={terms?.data?.warships_cutters}
       />
       <StatsItemDay
-        statsAll={stats.data.stats.cruise_missiles}
-        statsDay={stats.data.increase.cruise_missiles}
-        terms={terms.data.cruise_missiles}
+        statsAll={statistics?.data?.stats?.cruise_missiles}
+        statsDay={statistics?.data?.increase?.cruise_missiles}
+        term={terms?.data?.cruise_missiles}
       />
       <StatsItemDay
-        statsAll={stats.data.stats.uav_systems}
-        statsDay={stats.data.increase.uav_systems}
-        terms={terms.data.uav_systems}
+        statsAll={statistics?.data?.stats?.uav_systems}
+        statsDay={statistics?.data?.increase?.uav_systems}
+        term={terms?.data?.uav_systems}
       />
       <StatsItemDay
-        statsAll={stats.data.stats.special_military_equip}
-        statsDay={stats.data.increase.special_military_equip}
-        terms={terms.data.special_military_equip}
+        statsAll={statistics?.data?.stats?.special_military_equip}
+        statsDay={statistics?.data?.increase?.special_military_equip}
+        term={terms?.data?.special_military_equip}
       />
-
       <StatsItemDay
-        statsAll={stats.data.stats.submarines}
-        statsDay={stats.data.increase.submarines}
-        terms={terms.data.submarines}
+        statsAll={statistics?.data?.stats?.atgm_srbm_systems}
+        statsDay={statistics?.data?.increase?.atgm_srbm_systems}
+        term={terms?.data?.atgm_srbm_systems}
+      />
+      <StatsItemDay
+        statsAll={statistics?.data?.stats?.submarines}
+        statsDay={statistics?.data?.increase?.submarines}
+        term={terms?.data?.submarines}
       />
     </View>
   );
 };
-
-const styles = StyleSheet.create({
-  DateInfoBlock: {
-    display: 'flex',
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-  },
-});
 
 export default DateInfo;
