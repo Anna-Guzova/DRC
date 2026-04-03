@@ -51,8 +51,8 @@ It may be simple, but it helped me understand the basics and start building some
 Glory to Ukraine 🇺🇦
 
 
-
-![photo_2026-04-03_20-59-01](https://github.com/user-attachments/assets/f3b5d5e3-c8ea-4901-95f1-d48d5f5ddba6)
 ![photo_2026-04-03_20-58-02](https://github.com/user-attachments/assets/cfadb877-5dd2-4474-88f9-73c50374c9c3)
+![photo_2026-04-03_20-59-01](https://github.com/user-attachments/assets/f3b5d5e3-c8ea-4901-95f1-d48d5f5ddba6)
+
 
 
