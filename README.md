@@ -8,7 +8,11 @@ A simple Android app that shows daily statistics of russian army losses based on
 
 The app displays war statistics in a clean and minimal UI.
 
-You can:
+You can:![photo_2026-04-03_20-59-01](https://github.com/user-attachments/assets/f3b5d5e3-c8ea-4901-95f1-d48d5f5ddba6)
+
+![photo_2026-04-03_20-58-02](https://github.com/user-attachments/assets/cfadb877-5dd2-4474-88f9-73c50374c9c3)
+
+
 
 * view total losses
 * see daily updates (+ changes)
